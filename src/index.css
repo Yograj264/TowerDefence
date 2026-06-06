@@ -1,0 +1,153 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 240 20% 13%;
+    --foreground: 0 0% 100%;
+
+    --card: 240 17% 20%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 240 17% 20%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 266 79% 74%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 266 33% 54%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 240 17% 30%;
+    --muted-foreground: 240 10% 70%;
+
+    --accent: 240 17% 30%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 17% 25%;
+    --input: 240 17% 25%;
+    --ring: 266 79% 74%;
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+@layer utilities {
+  .game-grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-rows: repeat(8, minmax(0, 1fr));
+    gap: 2px;
+    position: relative;
+  }
+
+  .tower-placement {
+    @apply bg-game-grass/70 rounded-md transition-all duration-200;
+    background-image: 
+      linear-gradient(45deg, rgba(34,197,94,0.1) 25%, transparent 25%),
+      linear-gradient(-45deg, rgba(34,197,94,0.1) 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, rgba(34,197,94,0.1) 75%),
+      linear-gradient(-45deg, transparent 75%, rgba(34,197,94,0.1) 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+  }
+
+  .tower-placement:hover {
+    @apply bg-game-grass cursor-pointer;
+    box-shadow: 0 0 15px rgba(34,197,94,0.3);
+  }
+
+  .path-cell {
+    @apply bg-white/90 rounded-md;
+    background-image: 
+      linear-gradient(45deg, rgba(255,255,255,0.2) 25%, transparent 25%),
+      linear-gradient(-45deg, rgba(255,255,255,0.2) 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, rgba(255,255,255,0.2) 75%),
+      linear-gradient(-45deg, transparent 75%, rgba(255,255,255,0.2) 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+    box-shadow: inset 0 0 5px rgba(255,255,255,0.5);
+  }
+
+  .enemy {
+    @apply absolute h-8 w-8 bg-game-red rounded-full;
+    animation: bounce-small 1s infinite;
+  }
+
+  @keyframes bounce-small {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-2px);
+    }
+  }
+
+  @keyframes pulse-light {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.8;
+    }
+  }
+
+  .animate-pulse-light {
+    animation: pulse-light 2s infinite;
+  }
+
+  /* Tower attack animation */
+  @keyframes tower-attack {
+    0% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(1.2);
+      opacity: 0.8;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  .tower-attacking {
+    animation: tower-attack 0.5s ease-in-out;
+  }
+
+  /* Enemy hit animation */
+  @keyframes enemy-hit {
+    0% {
+      transform: scale(1);
+    }
+    25% {
+      transform: scale(0.9);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  .enemy-hit {
+    animation: enemy-hit 0.3s ease-in-out;
+  }
+}
